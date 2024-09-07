@@ -10,7 +10,7 @@ class TfIdf:
     # テキストデータを取得
     df        = pd.read_csv(self.input_data_path, sep=delimiter)
     text_data = df[header].dropna()
-    
+
     return self.vectorizer.fit_transform(text_data)
 
   def get_feature_names_out(self):

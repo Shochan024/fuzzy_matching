@@ -29,17 +29,20 @@ def prepair(c, header, input_data_path, output_data_path, delimiter='\t'):
   if not os.path.exists(dir_name):
     os.makedirs(dir_name)
 
-  print('Now vectorizing...')
   # 行列のキャッシュファイルのpathを作成
   sparse_matrix_cache_path = '.'.join([os.path.splitext(expanded_output_data_path)[0], 'npz'])
 
   # ベクトル化
+  print('Now vectorizing...')
   vectorize    = TfIdf(input_data_path=expanded_input_data_path)
   tfidf_matrix = vectorize.exec(header=header, output_data_path=expanded_output_data_path, delimiter=delimiter)
+  print('Done.')
 
   # 出力
+  print('Now exporting...')
   sparse.save_npz(sparse_matrix_cache_path, tfidf_matrix)
   vocab = vectorize.get_feature_names_out()
   pd.DataFrame(vocab).to_csv(expanded_output_data_path, sep=delimiter, index=False, header=False)
+  print('Done.')
 
   print(f"The data was exported to the {sparse_matrix_cache_path} directory.")
