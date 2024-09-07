@@ -1,0 +1,14 @@
+# Auto generated fuxxin' annoying folders
+**/.DS_Store
+**/__pycache__
+
+# .env file
+.env
+
+# tmp folder
+tmp/*
+!tmp/.keep
+
+# data folder
+data/*
+!data/.keep
