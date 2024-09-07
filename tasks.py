@@ -6,7 +6,7 @@ from src.transporter.fetch_data import PieceTitleFetcher
 from src.prepair.vectorizer import TfIdf
 
 @task
-def fetch(c, output_data_path='sample.tsv'):
+def fetch(c, output_data_path='sample.tsv', limit=100):
   # 格納先フォルダがなければ再帰的に作成
   path     = '/'.join(['data', output_data_path])
   dir_name = os.path.dirname(path)
@@ -16,8 +16,9 @@ def fetch(c, output_data_path='sample.tsv'):
   # データを取得
   print('Fetching piece titles..')
   fetcher = PieceTitleFetcher(data_path=path)
-  fetcher.fetch(limit=10)
+  fetcher.fetch(limit=limit)
   print(f"The data was exported to the {path} directory.")
+
 
 @task
 def prepair(c, header, input_data_path, output_data_path, delimiter='\t'):
