@@ -1,6 +1,7 @@
 # Auto generated fuxxin' annoying folders
 **/.DS_Store
 **/__pycache__
+.cache
 
 # .env file
 .env
