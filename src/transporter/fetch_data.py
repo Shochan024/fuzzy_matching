@@ -15,8 +15,8 @@ class PieceTitleFetcher:
       )
     )
 
-  def fetch(self, limit=1000):
-    tracks = self.__get_tracks(limit)
+  def fetch(self, limit=1000, verbose=False):
+    tracks = self.__get_tracks(limit, verbose)
 
     # 結果をtsvに出力
     with open(self.data_path, 'w', newline='', encoding='utf-8') as tsvfile:
@@ -25,7 +25,7 @@ class PieceTitleFetcher:
       for track in tracks: writer.writerow([track])
 
 
-  def __get_tracks(self, limit, tracks=None, offset=0):
+  def __get_tracks(self, limit, verbose=False, tracks=None, offset=0):
     # 初期実行時に返り値を初期化
     if tracks is None: tracks = []
 
@@ -38,8 +38,10 @@ class PieceTitleFetcher:
       album_tracks = self.client.album_tracks(album['id'])['items']
 
       for track in album_tracks:
-        tracks.append(track['name'].replace('\t', ' '))
+        piece_name = track['name'].replace('\t', ' ')
+        tracks.append(piece_name)
 
+        if verbose: print(f"{len(tracks)}作品目: {piece_name}")
         if len(tracks) >= limit: return tracks
 
-    return self.__get_tracks(limit, tracks, offset + 50)
+    return self.__get_tracks(limit, verbose, tracks, offset + 50)
